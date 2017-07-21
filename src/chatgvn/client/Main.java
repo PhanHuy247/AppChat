@@ -26,6 +26,8 @@ public class Main {
         actionRegister(actionGui);
         actionForget(actionGui);
 
+        
+        
     }
 
     private static void displayLogin(GUILogin loginGui) {
