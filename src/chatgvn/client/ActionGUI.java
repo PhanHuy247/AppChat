@@ -17,8 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,9 +49,10 @@ public class ActionGUI {
                     jsonObject.put("password", passWord);
                 } catch (JSONException ex) {
 //                    System.out.println("json eror 404");
-                    log.warning("json error");
+                   log.info("json error");
                 }
-                log.info(passWord);
+                log.info("kamezo");
+                log.debug("s1213234");
                 System.out.println(jsonObject.toString());
                 System.out.println("url: " + API_LOGIN_POST);
                 handleApi = new HandleApi();
