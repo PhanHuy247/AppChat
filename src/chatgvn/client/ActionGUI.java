@@ -48,11 +48,9 @@ public class ActionGUI {
                     jsonObject.put("loginId", userName);
                     jsonObject.put("password", passWord);
                 } catch (JSONException ex) {
-//                    System.out.println("json eror 404");
-                   log.info("json error");
+                   log.warn("json error");
                 }
-                log.info("kamezo");
-                log.debug("s1213234");
+             
                 System.out.println(jsonObject.toString());
                 System.out.println("url: " + API_LOGIN_POST);
                 handleApi = new HandleApi();
