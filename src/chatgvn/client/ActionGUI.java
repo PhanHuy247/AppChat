@@ -20,15 +20,28 @@ import java.awt.event.MouseEvent;
  * @author Phan Huy
  */
 public class ActionGUI {
-
+    
     private GUILogin _guiLogin;
     private String emailRegister;
     private CheckSendEmail checkSendEmail;
-
+    
     public ActionGUI(GUILogin _guiLogin) {
         this._guiLogin = _guiLogin;
     }
-
+    
+    public void actionClickButtonLogin() {
+        _guiLogin._jbLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userName = _guiLogin._jtfUserName.getText().trim();
+                String passWord = _guiLogin._jtfPassWord.getText().trim();
+                
+                System.out.println(userName);
+                System.out.println(passWord);
+            }
+        });
+    }
+    
     public void actionClickLabelForget() {
         _guiLogin._jlForgot.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent mEvent) {
@@ -36,31 +49,31 @@ public class ActionGUI {
                 GUIResetAccount guiReset = new GUIResetAccount();
                 guiReset.buildWindowReset();
                 getEmailReset(guiReset);
-
+                
             }
-
+            
         });
     }
-
+    
     public void actionClickLabelRegister() {
         _guiLogin._jbRegister.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent ae) {
                 _guiLogin._jfMainWindow.setVisible(false);
                 GUIRegister guiRegister = new GUIRegister();
                 guiRegister.buildWindowRegister();
-
+                
                 actionButtonRegister(guiRegister);
-
+                
             }
-
+            
         });
     }
-
+    
     private void actionButtonRegister(final GUIRegister guiRegister) {
         guiRegister._jbRegister.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent ae) {
                 String userName = guiRegister._jtfUserName.getText().trim();
@@ -68,24 +81,24 @@ public class ActionGUI {
                 String email = guiRegister._jtfEmail.getText().trim();
                 String phoneNumber = guiRegister._jtfPhoneNumber.getText().trim();
                 String questionSecrect = guiRegister._jtfQuestionSecret.getText().trim();
-                System.out.println(userName.length());             
+                System.out.println(userName.length());                
                 if (userName.equals(null) || passWord == "" || email == "" || phoneNumber == "" || questionSecrect == "") {
                     guiRegister._jlTextWaring.setVisible(true);
                 }
             }
         });
     }
-
+    
     private void getEmailReset(final GUIResetAccount guiReset) {
-
+        
         guiReset._jbSendEmail.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent aEvent) {
                 emailRegister = guiReset._jtfEmail.getText();
                 guiReset._jtfEmail.setText("");
                 ValidateEmail validateEmail = new ValidateEmail();
-
+                
                 if (!validateEmail.isValidEmailAddress(emailRegister)) {
                     guiReset._jlNotification.setText("email not invalid");
                     return;
@@ -98,10 +111,10 @@ public class ActionGUI {
                     return;
                 }
             }
-
+            
         });
     }
-
+    
     private void beSendEmailReset(GUIResetAccount guiReset) {
         guiReset.buildWindowSendEmail();
     }

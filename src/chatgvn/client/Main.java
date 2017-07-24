@@ -35,6 +35,7 @@ public class Main {
     }
 
     private static void actionLogin(ActionGUI actionGui) {
+        actionGui.actionClickButtonLogin();
     }
 
     private static void actionRegister(ActionGUI actionGui) {
