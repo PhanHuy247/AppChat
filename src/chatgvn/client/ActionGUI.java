@@ -9,11 +9,18 @@ import chatgvn.control.CheckSendEmail;
 import chatgvn.gui.GUILogin;
 import chatgvn.gui.GUIRegister;
 import chatgvn.gui.GUIResetAccount;
+import static chatgvn.utils.ApiProject.API_LOGIN_POST;
+import chatgvn.utils.HandleApi;
 import chatgvn.utils.ValidateEmail;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -21,9 +28,11 @@ import java.awt.event.MouseEvent;
  */
 public class ActionGUI {
     
+    Logger log = Logger.getLogger(ActionGUI.class.getName());
     private GUILogin _guiLogin;
     private String emailRegister;
     private CheckSendEmail checkSendEmail;
+    private HandleApi handleApi;
     
     public ActionGUI(GUILogin _guiLogin) {
         this._guiLogin = _guiLogin;
@@ -35,9 +44,24 @@ public class ActionGUI {
             public void actionPerformed(ActionEvent e) {
                 String userName = _guiLogin._jtfUserName.getText().trim();
                 String passWord = _guiLogin._jtfPassWord.getText().trim();
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("loginId", userName);
+                    jsonObject.put("password", passWord);
+                } catch (JSONException ex) {
+//                    System.out.println("json eror 404");
+                    log.warning("json error");
+                }
+                log.info(passWord);
+                System.out.println(jsonObject.toString());
+                System.out.println("url: " + API_LOGIN_POST);
+                handleApi = new HandleApi();
+                try {
+                    handleApi.postApi(API_LOGIN_POST, jsonObject.toString());
+                } catch (IOException ex) {
+                    System.out.println("handle api eror 404");
+                }
                 
-                System.out.println(userName);
-                System.out.println(passWord);
             }
         });
     }
@@ -81,7 +105,7 @@ public class ActionGUI {
                 String email = guiRegister._jtfEmail.getText().trim();
                 String phoneNumber = guiRegister._jtfPhoneNumber.getText().trim();
                 String questionSecrect = guiRegister._jtfQuestionSecret.getText().trim();
-                System.out.println(userName.length());                
+                System.out.println(userName.length());
                 if (userName.equals(null) || passWord == "" || email == "" || phoneNumber == "" || questionSecrect == "") {
                     guiRegister._jlTextWaring.setVisible(true);
                 }
